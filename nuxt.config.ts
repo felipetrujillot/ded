@@ -1,4 +1,7 @@
+import type { NuxtPage } from '@nuxt/schema'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
@@ -37,7 +40,7 @@ export default defineNuxtConfig({
     //removePagesMatching(pages)
   },
   devtools: { enabled: false },
-  modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt'],
+  modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', '@nuxt/fonts'],
   shadcn: {
     /**
      * Prefix for all the imported component
