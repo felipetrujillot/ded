@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     title: z.string(),
     text: z.string(),
     orientation: z.enum(['horizontal', 'vertical']),
+    voice: z.string(),
   })
 
   const result = await readValidatedBody(event, (body) =>
@@ -17,9 +18,9 @@ export default defineEventHandler(async (event) => {
   )
   if (!result.success) throw result.error.issues
 
-  const { title, text, orientation } = result.data
+  const { title, text, orientation, voice } = result.data
 
-  const videoName = await generateVideo({ title, text, orientation })
+  const videoName = await generateVideo({ title, text, orientation, voice })
 
   return {
     status: 'ok' as const,

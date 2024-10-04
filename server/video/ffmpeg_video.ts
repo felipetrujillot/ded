@@ -39,7 +39,9 @@ export const newVideo = async ({
   audio_file,
   duration,
   folder,
-}: InputNewVideo) => {
+}: InputNewVideo): Promise<string> => {
+  const file_name = Math.floor(10000 + Math.random() * 90000).toString()
+
   return new Promise((resolve, reject) => {
     const command = ffmpeg()
 
@@ -48,7 +50,6 @@ export const newVideo = async ({
       'fade=in:0:125',
       `subtitles=${srt_file}:force_style='Fontname=Arial,Fontsize=15,OutlineColour=&H80000000,PrimaryColour=&H03fcff,BorderStyle=4,"
           "BackColour=&H80000000,Outline=1,Shadow=0,MarginV=10,Alignment=10,Bold=-1'`,
-      // 'scale=500:1000',
     ])
 
     command.input(audio_file)
@@ -66,13 +67,14 @@ export const newVideo = async ({
       .outputOptions('-c:v libx264')
       .outputOptions('-c:a aac')
       .outputOptions('-shortest')
-      .output(`public/${folder}/video.mp4`)
+      .output(`public/${folder}/${file_name}.mp4`)
       .on('end', () => {
         console.log('ok')
-        resolve('video.mp4')
+        resolve(`${folder}/${file_name}.mp4`)
       })
       .on('error', (err) => {
         reject(err)
+        throw err
         console.error('Error during video creation:', err)
       })
 

@@ -17,8 +17,10 @@ const addForm = ref<{
   title: string
   text: string
   reddit_url: string
+  voice:string
   orientation: 'vertical' | 'horizontal'
 }>({
+  voice: 'en-US-Standard-A',
   reddit_url: '',
   title : `M31 My now exgirlfriend F29 broke up with me in one day, after 7.5 yrs together, what do I do?
 `,
@@ -37,7 +39,7 @@ const redditStatus = ref<'success' | 'pending' | 'error' | 'none'>('none')
  */
 const newVideo = async () => {
   page.value = 'pending'
-  const { title, text, orientation } = addForm.value
+  const { title, text, orientation ,voice} = addForm.value
 
   const res = await $fetch('/api/video', {
     method: 'POST',
@@ -45,10 +47,11 @@ const newVideo = async () => {
       title: title,
       text: text,
       orientation: orientation,
+      voice: voice
     },
   })
 
-  video.value = '/output/video.mp4'
+  video.value = res.video
 
   page.value = 'video'
 }
@@ -93,6 +96,38 @@ const searchReddit = async () => {
         </div>
         <Button @click.prevent="searchReddit">Search</Button>
       </div>
+    </div>
+
+
+    <div>
+      <Label>Voice</Label>
+
+      {{addForm.voice}}
+      <Select v-model="addForm.voice">
+    <SelectTrigger class="w-[200px]">
+      <SelectValue placeholder="Select a voice" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Voices</SelectLabel>
+        <SelectItem value="en-US-Neural2-A">
+              en-US-Neural2-A
+        </SelectItem>
+        <SelectItem value="en-US-Standard-A">
+          en-US-Standard-A
+        </SelectItem>
+        <SelectItem value="en-US-Standard-B">
+                    en-US-Standard-B
+
+        </SelectItem>
+        <SelectItem value="en-US-Standard-C">
+          en-US-Standard-C
+          
+        </SelectItem>
+        
+      </SelectGroup>
+    </SelectContent>
+  </Select>
     </div>
 
     <div>

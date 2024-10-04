@@ -10,10 +10,12 @@ export const ttsGCP = async ({
   text,
   filename,
   folder,
+  voice,
 }: {
   text: string
   filename: string
   folder: string
+  voice: string
 }) => {
   const client = new textToSpeech.TextToSpeechClient()
 
@@ -29,14 +31,14 @@ export const ttsGCP = async ({
     //voice: { languageCode: 'en-US', name: 'en-US-Journey-F' },
     // select the type of audio encoding
     voice: {
-      name: 'en-US-Standard-A',
+      name: voice,
       languageCode: 'en-US',
     },
     audioConfig: {
       audioEncoding: 'MP3',
       effectsProfileId: ['small-bluetooth-speaker-class-device'],
       pitch: 0,
-      speakingRate: 0,
+      speakingRate: 1.1,
     },
     enableTimePointing: [TimepointType.SSML_MARK],
   })

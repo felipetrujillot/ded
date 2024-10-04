@@ -8,13 +8,18 @@ import path from 'path'
  */
 export const processText = (text: string) => {
   let newText = ''
-  const splittedText = text.split(' ')
+
+  const filteredText = text.replaceAll('&', 'and')
+  const splittedText = filteredText.split(' ')
 
   splittedText.forEach((s, k) => {
     newText += `<mark name="_${k}"/>${s} `
   })
 
-  return `<speak>${newText}</speak>`
+  return {
+    processedText: `<speak>${newText}</speak>`,
+    splittedText: splittedText,
+  }
 }
 
 /**
@@ -41,13 +46,11 @@ type Timepoints = {
  * @returns
  */
 export const generateSrt = async (
-  fullText: string,
+  splittedText: string[],
   timepoints: Timepoints[],
   folder: string
 ) => {
   const srt_fullname = `public/${folder}/subtitles.srt`
-
-  const splittedText = fullText.split(' ')
 
   let srtContent = ''
   timepoints.forEach((point, index) => {

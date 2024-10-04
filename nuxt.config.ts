@@ -14,13 +14,9 @@ export default defineNuxtConfig({
     dirs: ['components', 'pages'],
   },
 
-  hooks: {
+  /*  hooks: {
     'pages:extend'(pages) {
-      /**
-       *
-       * @param pattern
-       * @param pages
-       */
+      
       function removePagesMatching(pattern: RegExp, pages: NuxtPage[] = []) {
         const pagesToRemove: NuxtPage[] = []
         for (const page of pages) {
@@ -38,7 +34,7 @@ export default defineNuxtConfig({
     },
 
     //removePagesMatching(pages)
-  },
+  }, */
   devtools: { enabled: false },
   modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', '@nuxt/fonts'],
   shadcn: {
